@@ -41,7 +41,7 @@ export default {
       const imageTensor = tf.tidy(() => {
             //Reshape the image to 28 x 28 px
             return examples.xs
-            .slice([i,0], [examples.xs.shape[1]])
+            .slice([i,0], [1, examples.xs.shape[1]])
             .reshape([28, 28, 1]);
       });
       const canvas = document.createElement("canvas");
