@@ -28,6 +28,7 @@ export default {
     }
   },
   created() {
+    async function showExamples(data) {
     //create a container in the visor
     const surface = tfvis
     .visor()
@@ -53,7 +54,6 @@ export default {
       imageTensor.dispose();
     }
   }
-
  //Run the process
     run();
     async function run() {
@@ -64,7 +64,6 @@ export default {
   }
 };
 
-   
 </script>
 
 <style>
