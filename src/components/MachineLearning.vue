@@ -1,8 +1,13 @@
 <template>
-  <div> 
-    <h1>{{title}}</h1>
-    {{text}}
-  </div>
+  <div>
+  <v-container>
+    <div> 
+      <h1>{{title}}</h1>
+      {{text}}
+    </div>
+  <v-btn @click="getModel">Get Model test</v-btn>
+  </v-container>
+</div>
 </template>
 
 <script>
@@ -16,10 +21,24 @@ export default {
     msg: String
   },
   data: () => ({
-    title: 'tytuł',
-    text: 'some text'
+    title: 'Testowy tytuł',
+    text: 'Testowy text, text, text, text, text, text'
   }),
   methods: {
+    getModel() {
+      // const model = ts.sequential();
+      
+      // const IMAGE_WIDTH = 28;
+      // const IMAGE_HEIGHT = 28;
+      // const IMAGE_CHANNELS = 1;
+
+      // model.add(tf.layer.con2d( {
+      //   inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS],
+      //   kernelSize: 5,
+      //   (..)
+      // }))
+      this.title = 'zmieniony tytuł'
+    },
     init() {
       tf;
       tfvis;
