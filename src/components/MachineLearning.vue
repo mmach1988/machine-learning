@@ -5,7 +5,7 @@
       <h1>{{title}}</h1>
       {{text}}
     </div>
-  <v-btn @click="getModel">Get Model test</v-btn>
+  <v-btn @click="getModel">Get Model</v-btn>
   </v-container>
 </div>
 </template>
@@ -26,18 +26,49 @@ export default {
   }),
   methods: {
     getModel() {
-      // const model = ts.sequential();
+      const model = tf.sequential();
       
-      // const IMAGE_WIDTH = 28;
-      // const IMAGE_HEIGHT = 28;
-      // const IMAGE_CHANNELS = 1;
+      const IMAGE_WIDTH = 28;
+      const IMAGE_HEIGHT = 28;
+      const IMAGE_CHANNELS = 1;
 
-      // model.add(tf.layer.con2d( {
-      //   inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS],
-      //   kernelSize: 5,
-      //   (..)
-      // }))
-      this.title = 'zmieniony tytuł'
+      model.add(tf.layer.conv2d( {
+        inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS],
+        kernelSize: 5,
+        filters: 8,
+        strides: 1,
+        activation: "relu",
+        kernelInitializer: "varianceScaling"
+      }));
+      model.add(
+        tf.layers.maxPooling2d({
+          poolSize: [2, 2],
+          strides: [2, 2],
+        })
+      );
+      tf.layer.conv2d({
+        inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS],
+        kernelSize: 5,
+        filters: 16,
+        strides: 1,
+        activation: "relu",
+        kernelInitializer: "varianceScaling"
+      });
+      model.add(
+        tf.layers.maxPooling2d({
+          poolSize: [2, 2],
+          strides: [2, 2]
+        })
+      );
+    const NUM_OUTPUT_CLASSES = 10;
+    model.add({
+      units: NUM_OUTPUT_CLASSES,
+      kernelInitializer: "varianceScaling",
+      activation: "softmax"
+    });
+    
+    model.add(tf.layers.flatten());
+
     },
     init() {
       tf;
