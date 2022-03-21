@@ -5,7 +5,7 @@
       <h1>{{title}}</h1>
       {{text}}
     </div>
-  <v-btn @click="getModel">Get Model</v-btn>
+  <v-btn @click="showModel">Show Model</v-btn>
   </v-container>
 </div>
 </template>
@@ -32,7 +32,7 @@ export default {
       const IMAGE_HEIGHT = 28;
       const IMAGE_CHANNELS = 1;
 
-      model.add(tf.layer.conv2d( {
+      model.add(tf.layers.conv2d( {
         inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS],
         kernelSize: 5,
         filters: 8,
@@ -46,7 +46,7 @@ export default {
           strides: [2, 2],
         })
       );
-      tf.layer.conv2d({
+      tf.layers.conv2d({
         inputShape: [IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS],
         kernelSize: 5,
         filters: 16,
@@ -67,8 +67,18 @@ export default {
       activation: "softmax"
     });
     
-    model.add(tf.layers.flatten());
-
+    const optimizer = tf.train.adam();
+    model.compile({
+      optimizer: optimizer,
+      loss: "categoricalCrossentropy",
+      metrics: ["accuracy"]
+    });
+    return model;
+    //console.log("Thank you You clicked on this method ")
+    }, 
+    showModel() {
+      const model = this.getModel();
+      tfvis.show.modelSummary({ name: "Model architecture" }, model);
     },
     init() {
       tf;
